@@ -14,7 +14,7 @@ object LTEqTest {
     type <=[A <: Nat, B <: Nat] = LTEq[A, B]
 
     implicit def LTEq00 = new <=[_0, _0] {}
-    implicit def LTEq0a[A <: Nat] = new <=[_0, A] {}
+    implicit def LTEq0a[A <: Nat] = new <=[_0, Succ[A]] {}
     implicit def LTEqab[A <: Nat, B <: Nat](implicit lteq: A <= B) = new <=[Succ[A], Succ[B]] {}
   }
 }
