@@ -13,7 +13,9 @@ object NonDecreasingTest {
   @implicitNotFound("${L} is not in a non decreasing order")
   trait NonDecreasing[L <: HList]
 
-
+  // 1. case empty HList
+  // 2. case single element HList
+  // 3. induction step
 
   def acceptNonDecreasing[L <: HList](l : L)(implicit ni : NonDecreasing[L]) = l
 }
