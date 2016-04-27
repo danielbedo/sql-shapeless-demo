@@ -34,3 +34,11 @@ object SelectionSortTester {
 
   def selectionSort[L <: HList, S <: HList](l : L)(implicit sort : SelectionSort[L, S]) = sort(l)
 }
+
+//val unsorted = _3 :: _1 :: _4 :: _0 :: _2 :: HNil
+//typed[_3 :: _1 :: _4 :: _0 :: _2 :: HNil](unsorted)
+//acceptNonDecreasing(unsorted)  // Does not compile!
+//
+//val sorted = selectionSort(unsorted)
+//typed[_0 :: _1 :: _2 :: _3 :: _4 :: HNil](sorted)
+//acceptNonDecreasing(sorted)    // Compiles!

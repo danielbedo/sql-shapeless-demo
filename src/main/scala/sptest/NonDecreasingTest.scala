@@ -13,10 +13,18 @@ object NonDecreasingTest {
   @implicitNotFound("${L} is not in a non decreasing order")
   trait NonDecreasing[L <: HList]
 
-  implicit def hnilNonDecreasing = new NonDecreasing[HNil] {}
-  implicit def hListNonDecreasing1[H] = new NonDecreasing[H :: HNil] {}
-  implicit def hListNonDecreasing2[H <: Nat, L <: Nat, Rem <: HList]
-  (implicit lteq: H <= L, ndq: NonDecreasing[L :: Rem]) = new NonDecreasing[H :: L :: Rem] {}
+  implicit def hNilNonDecreasing = new NonDecreasing[HNil] {}
+  implicit def hListNonDecreasing1[H <: Nat] = new NonDecreasing[H :: HNil] {}
+  implicit def hListNonDecreasing2[H <: Nat, I <: Nat, Rem <: HList]
+  (implicit lteq: H <= I, nd: NonDecreasing[I :: Rem]) = new NonDecreasing[H :: I :: Rem] {}
 
   def acceptNonDecreasing[L <: HList](l : L)(implicit ni : NonDecreasing[L]) = l
 }
+
+//import shapeless._; import shapeless.Nat._; import sptest.NonDecreasingTest._
+//implicitly[NonDecreasing[_1 :: _2 :: _3 :: HNil]] // OK
+//implicitly[NonDecreasing[_1 :: _3 :: _2 :: HNil]] // Doesn't compile
+//
+//// Apply at the value-level
+//acceptNonDecreasing(_1 :: _2 :: _3 :: HNil)       // OK
+//acceptNonDecreasing(_1 :: _3 :: _2 :: HNil)       // Doesn't compile

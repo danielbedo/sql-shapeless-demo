@@ -23,19 +23,22 @@ object SelectLeastTest {
   }
 
   object SelectLeast extends LowPrioritySelectLeast {
-    implicit def hlistSelectLeast3[H <: Nat, T <: HList, TMin <: Nat, TRem <: HList]
-    (implicit tsl: SelectLeast[T, TMin, TRem], ev: TMin < H) = new SelectLeast[H :: T, TMin, H :: TRem] {
-      def apply(l: H :: T): (TMin, H :: TRem) = {
-        val (tm, rem) = tsl(l.tail)
-        (tm, l.head :: rem)
+    implicit def hListSelectLeast2[H <: Nat, T <: HList, TMin <: Nat, TRem <: HList]
+    (implicit tsl: SelectLeast[T, TMin, TRem], ev: TMin < H)= new SelectLeast[H :: T, TMin, H :: TRem] {
+      def apply(l: H :: T) = {
+        val (tm, tr) = tsl(l.tail)
+        (tm, l.head :: tr)
       }
     }
+
   }
 
   def selectLeast[L <: HList, M <: Nat, Rem <: HList](l : L)(implicit sl : SelectLeast[L, M, Rem]) = sl(l)
 
+// import shapeless._; import shapeless.Nat._; import sptest.SelectLeastTest._; import shapeless.Nat._0
+//
 //  val (l1, r1) = selectLeast(_1 :: _2 :: _3 :: HNil)
-  // def typed[T](t: => T) {}
+//  def typed[T](t: => T) {}
 //  typed[_1](l1)
 //  typed[_2 :: _3 :: HNil](r1)
 }
