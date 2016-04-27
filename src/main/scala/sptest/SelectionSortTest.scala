@@ -17,11 +17,11 @@ object SelectionSortTester {
   }
 
   trait LowPrioritySelectionSort {
-
+    // low priority case: already sorted list
   }
 
   object SelectionSort extends LowPrioritySelectionSort {
-
+    // higher priority: not sorted yet
   }
 
   def selectionSort[L <: HList, S <: HList](l : L)(implicit sort : SelectionSort[L, S]) = sort(l)
