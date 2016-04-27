@@ -13,19 +13,27 @@ import shapeless.{Succ, Nat}
 //type _5 = Succ[_4]
 //...
 
+object NatTest {
 
-trait Sum[A <: Nat, B <: Nat] { type Out <: Nat }
+  trait Sum[A <: Nat, B <: Nat] {
+    type Out <: Nat
+  }
 
-object Sum {
-  def apply[A <: Nat, B <: Nat](implicit sum: Sum[A, B]): Aux[A, B, sum.Out] = sum
+  object Sum {
+    def apply[A <: Nat, B <: Nat](implicit sum: Sum[A, B]): Aux[A, B, sum.Out] = sum
 
-  type Aux[A <: Nat, B <: Nat, C <: Nat] = Sum[A, B] { type Out = C }
+    type Aux[A <: Nat, B <: Nat, C <: Nat] = Sum[A, B] {type Out = C}
 
-  // 1.: a+0 = 0 forall a e N
-  implicit def sum1[B <: Nat]: Aux[_0, B, B] = new Sum[_0, B] { type Out = B }
+    // 1.: a+0 = 0 forall a e N
+    implicit def sum1[B <: Nat]: Aux[_0, B, B] = new Sum[_0, B] {
+      type Out = B
+    }
 
-  // 2.  a + S(b) = S(a) + b
-  implicit def sum2[A <: Nat, B <: Nat]
-  (implicit sum : Sum[A, Succ[B]]): Aux[Succ[A], B, sum.Out] = new Sum[Succ[A], B] { type Out = sum.Out }
+    // 2.  a + S(b) = S(a) + b
+    implicit def sum2[A <: Nat, B <: Nat]
+    (implicit sum: Sum[A, Succ[B]]): Aux[Succ[A], B, sum.Out] = new Sum[Succ[A], B] {
+      type Out = sum.Out
+    }
+  }
+
 }
-

@@ -13,11 +13,10 @@ object LTEqTest {
 
     type <=[A <: Nat, B <: Nat] = LTEq[A, B]
 
-    implicit def LTEq00 = new <=[_0, _0] {}
-    implicit def LTEq0a[A <: Nat] = new <=[_0, Succ[A]] {}
-    implicit def LTEqab[A <: Nat, B <: Nat](implicit lte: A <= B) = new <=[Succ[A], Succ[B]] {}
+
   }
 }
+
 
 //import shapeless._; import shapeless.Nat._; import sptest.LTEqTest.LTEq._
 //implicitly[_2 <= _5] // OK

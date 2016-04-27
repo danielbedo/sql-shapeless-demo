@@ -17,29 +17,20 @@ object SelectionSortTester {
   }
 
   trait LowPrioritySelectionSort {
-    implicit def hlistSelectionSort1[S <: HList] = new SelectionSort[S, S] {
-      def apply(l : S) : S = l
-    }
+
   }
 
   object SelectionSort extends LowPrioritySelectionSort {
-    implicit def hlistSelectionSort2[L <: HList, M <: Nat, Rem <: HList, ST <: HList]
-    (implicit sl: SelectLeast[L, M, Rem], sr: SelectionSort[Rem, ST])= new SelectionSort[L, M :: ST] {
-      def apply(l: L) = {
-        val (min, rem) = sl(l)
-        min :: sr(rem)
-      }
-    }
 
   }
 
   def selectionSort[L <: HList, S <: HList](l : L)(implicit sort : SelectionSort[L, S]) = sort(l)
 }
 
-// import shapeless._; import shapeless.Nat._;  import sptest.SelectionSortTester._;
-// import shapeless.Nat._0;
-//val unsorted = _3 :: _1 :: _4 :: _0 :: _2 :: HNil
-//typed[_3 :: _1 :: _4 :: _0 :: _2 :: HNil](unsorted)
+// import shapeless._;   import sptest.SelectionSortTester._; import shapeless.Nat._;
+// import sptest.NonDecreasingTest._
+//val unsorted = _3 :: _1 :: _4 :: _2 :: HNil
+//typed[_3 :: _1 :: _4 :: _2 :: HNil](unsorted)
 //acceptNonDecreasing(unsorted)  // Does not compile!
 //
 //val sorted = selectionSort(unsorted)

@@ -25,7 +25,7 @@ object SelectLeastTest {
   object SelectLeast extends LowPrioritySelectLeast {
     implicit def hListSelectLeast2[H <: Nat, T <: HList, TMin <: Nat, TRem <: HList]
     (implicit sl: SelectLeast[T, TMin, TRem], ev: TMin < H) = new SelectLeast[H :: T, TMin, H :: TRem] {
-      def apply(l: H :: T) = {
+      def apply(l : H :: T) = {
         val (tmin, trem) = sl(l.tail)
         (tmin, l.head :: trem)
       }
